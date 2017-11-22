@@ -20,7 +20,7 @@ internal class FieldResolverScanner(val options: SchemaParserOptions) {
         private val log = LoggerFactory.getLogger(FieldResolverScanner::class.java)
 
         fun getAllMethods(type: Class<*>): List<Method> {
-            return type.declaredMethods.toList() + ClassUtils.getAllSuperclasses(type).flatMap { it.declaredMethods.toList() }.filter { !Modifier.isPrivate(it.modifiers) }
+            return type.declaredMethods.toList() + ClassUtils.getAllSuperclasses(type).flatMap { it.declaredMethods.toList() }.filter { !Modifier.isPrivate(it.modifiers) } + ClassUtils.getAllInterfaces(type).flatMap { it.declaredMethods.toList() }.filter { it.isDefault }
         }
     }
 
